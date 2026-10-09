@@ -39,3 +39,8 @@ xk = x−k + Kkyk ------------(7)
   <img width="80%" height="398" alt="Screenshot 2026-10-09 105131" src="https://github.com/user-attachments/assets/d927a844-0855-49ce-9065-138e3095b7ce" />
 </p>
 
+But we cannot use the linear kalman filter for real-life scenarios so we introduce non-linear kalman filter here.
+The non lineaar Kalman fliter has 2 steps in the 1st step the orientation of the object is estimated and in the 2nd stage Kalman filter uses the estimates angles from the 1st step to compute the position of the object.
+
+So how do we get the orientation of an object? It's found using the IMU sensor. IMU means Inertial Measurement Unit consisting of an accelerometer, gyroscope and the magnetometer.
+
