@@ -35,6 +35,7 @@ After this Kalman gain is estimated to know how much to trust the prediction vs 
 Kk = P−k HT(HP −k HT + R)−1 ------------------(6)
 Now comes the second phase of the Kalman filter which is update, we update the state by multiplying the Kalman gain Kk and the error yk and add the predicted output x−k to get the estimate of the new position.
 xk = x−k + Kkyk ------------(7)
-
-
+<p align="center">
+  <img width="80%" height="398" alt="Screenshot 2026-10-09 105131" src="https://github.com/user-attachments/assets/d927a844-0855-49ce-9065-138e3095b7ce" />
+</p>
 
