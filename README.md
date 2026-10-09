@@ -16,9 +16,25 @@ GPS-it's inefficient during satellite drift,scattering,bad weather or intentiona
 How to overcome this? We'll integrate Kalman Filter to reduce the sensor noise present in these.We are specially dealing with nonlinear kalman filter which is Extended Kalman Filter as it's more suitable for complex scenarios when compared to linear Kalman filter.
 
 ### How do we implement a Kalman Filter:
-It has two main steps: prediction and Update.
-Step1: We are going to make a prediction of the position of the drone using the mathematical formulae.
-Step2: We'll estimate the uncertainity of our estimation to know how much our estimation can be trusted.
-Step3: Now we'll take reading from GPS, IMU
+In the Kalman filter there are linear and non linear types, non linear include extended and unscented kalman filter. But for now we'll discuss only linear kalman filter and in the later discussion we'll move forward to non-linear kalman filter.
+Kalman filter has two main steps: prediction and Update
+Let's discuss what happens in the prediction step:
+Let the state of the vehicle be represented using a linear motion model(not ideal for real life scenario) subject to Gaussian noise, where xk and xk−1 are the
+state vectors at time k and k − 1. And uk represents the control variables (external effects such as acceleration, thrust,and gravity) and wk is the gaussian noise.
+The state equation of the Kalman filter is defined as the following:
+xk = Axk−1 + Buk + wk ---------(1)
+The linear measurement model with gaussian noise or the observation equation is :
+zk = Hxk + vk ---------(2)
+To compute the uncertainty in the prediction, we evaluate the covariance of the prediction residual, where A represents the motion model matrix and Pk−1 is the covariance of initial state and Q is the process gaussian noise.
+P−k = APk−1AT + Q -----------(3)
+After making a prediction(using mathematical equation) and obtaining a measurement (from GPS), we compute the error yk, which is the difference between measurement zk and prediction Hx−k to find how uncertain we are with the prediction made. The uncertainty in measurement might be due to SNR, time on target.
+yk = zk − Hx−k------------------(4)
+And compute the residual covariance Sk, which tells us how much uncertain is the error, which helps understand how much correction is to be made in error. Uncertainty in error can be caused due to prediction uncertainty and GPS noise.
+Sk = HP −k HT + R --------------(5)
+After this Kalman gain is estimated to know how much to trust the prediction vs measurement or we can say how much to correct. If Kk approaches 1, the filter trusts the measurement more, whereas if Kk approaches 0, the filter relies more on prediction.
+Kk = P−k HT(HP −k HT + R)−1 ------------------(6)
+Now comes the second phase of the Kalman filter which is update, we update the state by multiplying the Kalman gain Kk and the error yk and add the predicted output x−k to get the estimate of the new position.
+xk = x−k + Kkyk ------------(7)
+
 
 
