@@ -58,6 +58,7 @@ So how do we get the orientation of an object? It's found using the IMU sensor. 
 | Date of Collection |	Total Size |	Path length	| Sensors |
 | --- | --- | --- | --- |
 | 2018/12/19 |	4.14 GB |	>10 Km |	GNSS/LiDAR/IMU/Ground Truth |
+
 **Usage:** Currently working on GPS, IMU , Ground truth data. 
 
 
