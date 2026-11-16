@@ -21,18 +21,25 @@ Kalman filter has two main steps: prediction and Update
 Let's discuss what happens in the prediction step:
 Let the state of the vehicle be represented using a linear motion model(not ideal for real life scenario) subject to Gaussian noise, where xk and xk−1 are the
 state vectors at time k and k − 1. And uk represents the control variables (external effects such as acceleration, thrust,and gravity) and wk is the gaussian noise.
+
 The state equation of the Kalman filter is defined as the following:
 - xk = Axk−1 + Buk + wk ---------(1)
+
 The linear measurement model with gaussian noise or the observation equation is :
 - zk = Hxk + vk ---------(2)
+
 To compute the uncertainty in the prediction, we evaluate the covariance of the prediction residual, where A represents the motion model matrix and Pk−1 is the covariance of initial state and Q is the process gaussian noise.
 - P−k = APk−1AT + Q -----------(3)
+  
 After making a prediction(using mathematical equation) and obtaining a measurement (from GPS), we compute the error yk, which is the difference between measurement zk and prediction Hx−k to find how uncertain we are with the prediction made. The uncertainty in measurement might be due to SNR, time on target.
 - yk = zk − Hx−k------------------(4)
+
 And compute the residual covariance Sk, which tells us how much uncertain is the error, which helps understand how much correction is to be made in error. Uncertainty in error can be caused due to prediction uncertainty and GPS noise.
 - Sk = HP −k HT + R --------------(5)
+
 After this Kalman gain is estimated to know how much to trust the prediction vs measurement or we can say how much to correct. If Kk approaches 1, the filter trusts the measurement more, whereas if Kk approaches 0, the filter relies more on prediction.
 - Kk = P−k HT(HP −k HT + R)−1 ------------------(6)
+
 Now comes the second phase of the Kalman filter which is update, we update the state by multiplying the Kalman gain Kk and the error yk and add the predicted output x−k to get the estimate of the new position.
 - xk = x−k + Kkyk ------------(7)
 <p align="center">
@@ -40,7 +47,17 @@ Now comes the second phase of the Kalman filter which is update, we update the s
 </p>
 
 But we cannot use the linear kalman filter for real-life scenarios so we introduce non-linear kalman filter here.
-The non lineaar Kalman fliter has 2 steps in the 1st step the orientation of the object is estimated and in the 2nd stage Kalman filter uses the estimates angles from the 1st step to compute the position of the object.
+The non lineaar Kalman fliter has 2 steps, in the 1st step the orientation of the object is estimated and in the 2nd stage Kalman filter uses the estimates angles from the 1st step to compute the position of the object.
 
 So how do we get the orientation of an object? It's found using the IMU sensor. IMU means Inertial Measurement Unit consisting of an accelerometer, gyroscope and the magnetometer.
+
+### Dataset:
+**Dataset name:** UrbanNav-TK-20181219 (/Shinjuku)<br>
+**Source:** https://github.com/IPNL-POLYU/UrbanNavDataset?utm_source=chatgpt.com<br>
+**Collection Details:** <br>
+| Date of Collection |	Total Size |	Path length	| Sensors |
+| --- | --- | --- | --- |
+| 2018/12/19 |	4.14 GB |	>10 Km |	GNSS/LiDAR/IMU/Ground Truth |
+**Usage:** Currently working on GPS, IMU , Ground truth data. 
+
 
